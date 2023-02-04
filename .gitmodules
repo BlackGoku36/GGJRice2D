@@ -1,0 +1,15 @@
+[submodule "Kha"]
+	path = Kha
+	url = https://github.com/Kode/Kha
+[submodule "Rice2D"]
+	path = Rice2D
+	url = https://github.com/BlackGoku36/Rice2D.git
+[submodule "hscript"]
+	path = hscript
+	url = https://github.com/HaxeFoundation/hscript.git
+[submodule "haxeui-core"]
+	path = haxeui-core
+	url = https://github.com/haxeui/haxeui-core.git
+[submodule "haxeui-kha"]
+	path = haxeui-kha
+	url = https://github.com/haxeui/haxeui-kha.git
