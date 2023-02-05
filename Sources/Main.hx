@@ -6,8 +6,14 @@ class Main {
 
     public static function main() {
         App.init("Empty Rice2D", 1280, 720, kha.Color.Black, kha.WindowMode.Fullscreen, ()->{
+            new UIController();
+            UIController.showMenu();
+            new MapController();
+            MapController.paused = true;
+            new LevelsController();
+            LevelsController.hideMenu();
         });// 1
-        new MapController();
+        // new MapController();
         // MapController.setLevel(1, true);
         // new UIController();
     }

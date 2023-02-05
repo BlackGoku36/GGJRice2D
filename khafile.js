@@ -1,5 +1,5 @@
 let project = new Project('New Project');
-project.addAssets('Sources/Assets/**');
+project.addAssets('Assets/**');
 project.addShaders('Shaders/**');
 project.addSources('Sources');
 project.addLibrary('haxeui-core');

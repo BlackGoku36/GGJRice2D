@@ -15,7 +15,7 @@ class MapController{
     public static var map: Array<Array<Int>> = [[]];
     static var blockSize: Int = 150;
 
-    public static var paused = false;
+    public static var paused = true;
 
     var kb = rice2d.Input.getKeyboard();
 
@@ -25,14 +25,37 @@ class MapController{
     static var time = 0.0;
     static var timeLimit = 0.0; // In seconds
 
+    static var buttonback: UIController.ButtonUI;
+
     public function new() {
-        setLevel(level, true);
+        buttonback = new UIController.ButtonUI("<", 100, 100, 100, 100, ()->{
+            reset(false);
+            paused = true;
+            UIController.showMenu();
+        });
+
+        setLevel(level, false);
         time = haxe.Timer.stamp();
+        var mergeCount = 0;
 
         App.notifyOnUpdate(()-> {
-            if(paused) return;
+            if(paused){
+                buttonback.pauseHide();
+                return;
+            }else{
+                buttonback.resumeShow();
+            }
             if((haxe.Timer.stamp()-time) > timeLimit) state = State.Failed;
-            if(state == State.Won || state == State.Failed) return;
+            if(state == State.Won || state == State.Failed){
+                if(state == State.Won){
+                    GameOverScreen.showMenu("You won!");
+                }else{
+                    GameOverScreen.showMenu("You lost!");
+                }
+                buttonback.pauseHide();
+                paused = true;
+                return;
+            }
 
             if(kb.started(Up)){
                 for (y in 0...mapSize) {
@@ -69,7 +92,7 @@ class MapController{
                                     map[y][x] = 0;
                                 }
                             }
-                            else if(getType(x, y) == mapSize-1){
+                            else if(getType(x, y) == 3){
                                 if(getType(x, y+1) == 0){
                                     var newY = y;
                                     while(true){
@@ -143,7 +166,6 @@ class MapController{
                 var square_root = 0;
                 var x_pos = 0;
                 var y_pos = 0;
-                var mergeCount = 0;
                 for(y in 0...(mapSize-1)){
                     if(state == State.Won) break;
                     for (x in 0...(mapSize-1)) {
@@ -176,17 +198,11 @@ class MapController{
                         }
                     }
                 }
-                // if(state == State.Won){
-                //     trace("Level completed!");
-                //     map[y_pos][x_pos] = square_root + 768;
-                //     map[y_pos+1][x_pos] = 0;
-                //     map[y_pos][x_pos+1] = 0;
-                //     map[y_pos+1][x_pos+1] = 0;
-                // }
             }
         });
 
         App.notifyOnRenderG2((canvas)->{
+            if(paused) return;
             var windowDimension = rice2d.Window.getWindowSize();
             var mapWidth = mapSize*blockSize;
             var mapHeight = mapSize*blockSize;
@@ -197,22 +213,19 @@ class MapController{
             var g = canvas.g2;
             var col = g.color;
             g.font = rice2d.App.font;
-            g.fontSize = 35;
-            if(state == State.Won){
-                g.clear(Color.Green);
-            }else if(state == State.Failed){
-                g.clear(Color.Red);
-            }else{
+            g.fontSize = 70;
+            
+            if(state == State.Playing){
                 for (y in 0...mapSize) {
                     for (x in 0...mapSize){
                         var type = getType(x, y);
-                        if(type == 0) g.color = Color.White;
-                        else if(type == 1) g.color = Color.Red;
-                        else if(type == 2) g.color = Color.Green;
-                        else if(type == 3) g.color = Color.Blue;
+                        if(type == 0) g.color = Color.fromBytes(240, 230, 239, 255);
+                        else if(type == 1) g.color = Color.fromBytes(156, 137, 184, 255);
+                        else if(type == 2) g.color = Color.fromBytes(240, 166, 202, 255);
+                        else if(type == 3) g.color = Color.fromBytes(239, 195, 230, 255);
                         g.fillRect(x*blockSize+mapPosX, y*blockSize+mapPosY, blockSize, blockSize);
                         g.color = Color.Black;
-                        g.drawString(getValue(x, y) + "", x*blockSize+mapPosX, y*blockSize+mapPosY);
+                        if(type != 0) g.drawString(getValue(x, y) + "", x*blockSize+mapPosX+50, y*blockSize+mapPosY+40);
                     }
                 }
             }
@@ -282,7 +295,7 @@ class MapController{
                 map = Levels.level9;
                 timeLimit = Levels.level9TimeLimit;
                 mapSize = 6;
-                mergeTotal = 2;
+                mergeTotal = 3;
             }
             default: invalidLevel = true;
         }
