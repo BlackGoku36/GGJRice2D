@@ -12,7 +12,14 @@ class MapController{
 
     public static var mapSize:Int = 4;
 
-    public static var map: Array<Array<Int>> = [[]];
+    public static var map: Array<Array<Int>> = [
+        [270, 0, 0, 0, 0, 0], 
+        [0, 0, 0, 0, 0, 0], 
+        [520, 521, 0, 0, 0, 0], 
+        [773, 0, 0, 0, 0, 0],
+        [773, 0, 0, 0, 0, 0],
+        [773, 0, 0, 0, 0, 0]
+    ];
     static var blockSize: Int = 150;
 
     public static var paused = true;
@@ -258,49 +265,81 @@ class MapController{
                 mergeTotal = 1;
             }
             case 2:{
-                map = Levels.level2;
+                for(i in 0...Levels.level2.length){
+                    for(j in 0...Levels.level2.length){
+                        map[j][i] = Levels.level2[j][i];
+                    }
+                }
                 timeLimit = Levels.level2TimeLimit;
                 mapSize = 4;
                 mergeTotal = 1;
             }
             case 3:{
-                map = Levels.level3;
+                for(i in 0...Levels.level3.length){
+                    for(j in 0...Levels.level3.length){
+                        map[j][i] = Levels.level3[j][i];
+                    }
+                }
                 timeLimit = Levels.level3TimeLimit;
                 mapSize = 5;
                 mergeTotal = 1;
             }
             case 4:{
-                map = Levels.level4;
+                for(i in 0...Levels.level4.length){
+                    for(j in 0...Levels.level4.length){
+                        map[j][i] = Levels.level4[j][i];
+                    }
+                }
                 timeLimit = Levels.level4TimeLimit;
                 mapSize = 5;
                 mergeTotal = 2;
             }
             case 5:{
-                map = Levels.level5;
+                for(i in 0...Levels.level5.length){
+                    for(j in 0...Levels.level5.length){
+                        map[j][i] = Levels.level5[j][i];
+                    }
+                }
                 timeLimit = Levels.level5TimeLimit;
                 mapSize = 5;
                 mergeTotal = 2;
             }
             case 6:{
-                map = Levels.level6;
+                for(i in 0...Levels.level6.length){
+                    for(j in 0...Levels.level6.length){
+                        map[j][i] = Levels.level6[j][i];
+                    }
+                }
                 timeLimit = Levels.level6TimeLimit;
                 mapSize = 5;
                 mergeTotal = 1;
             }
             case 7:{
-                map = Levels.level7;
+                for(i in 0...Levels.level7.length){
+                    for(j in 0...Levels.level7.length){
+                        map[j][i] = Levels.level7[j][i];
+                    }
+                }
                 timeLimit = Levels.level7TimeLimit;
                 mapSize = 5;
                 mergeTotal = 4;
             }
             case 8:{
-                map = Levels.level8;
+                for(i in 0...Levels.level8.length){
+                    for(j in 0...Levels.level8.length){
+                        map[j][i] = Levels.level8[j][i];
+                    }
+                }
                 timeLimit = Levels.level8TimeLimit;
                 mapSize = 6;
                 mergeTotal = 3;
             }
             case 9:{
-                map = Levels.level9;
+                for(i in 0...Levels.level9.length){
+                    for(j in 0...Levels.level9.length){
+                        map[j][i] = Levels.level9[j][i];
+                    }
+                }
                 timeLimit = Levels.level9TimeLimit;
                 mapSize = 6;
                 mergeTotal = 3;

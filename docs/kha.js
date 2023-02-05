@@ -523,60 +523,152 @@ MapController.reset = function(resume) {
 	MapController.time = kha_Scheduler.realTime();
 	MapController.paused = !resume;
 };
+MapController.copy = function(arr) {
+	return arr.slice();
+};
 MapController.setLevel = function(level,resume) {
 	var invalidLevel = false;
 	switch(level) {
 	case 1:
-		MapController.map.length = 0;
-		MapController.map = Levels.level1.slice();
+		var _g = 0;
+		var _g1 = Levels.level1.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level1.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level1[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level1TimeLimit;
 		MapController.mapSize = 4;
 		MapController.mergeTotal = 1;
 		break;
 	case 2:
-		MapController.map = Levels.level2;
+		var _g = 0;
+		var _g1 = Levels.level2.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level2.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level2[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level2TimeLimit;
 		MapController.mapSize = 4;
 		MapController.mergeTotal = 1;
 		break;
 	case 3:
-		MapController.map = Levels.level3;
+		var _g = 0;
+		var _g1 = Levels.level3.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level3.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level3[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level3TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 1;
 		break;
 	case 4:
-		MapController.map = Levels.level4;
+		var _g = 0;
+		var _g1 = Levels.level4.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level4.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level4[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level4TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 2;
 		break;
 	case 5:
-		MapController.map = Levels.level5;
+		var _g = 0;
+		var _g1 = Levels.level5.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level5.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level5[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level5TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 2;
 		break;
 	case 6:
-		MapController.map = Levels.level6;
+		var _g = 0;
+		var _g1 = Levels.level6.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level6.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level6[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level6TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 1;
 		break;
 	case 7:
-		MapController.map = Levels.level7;
+		var _g = 0;
+		var _g1 = Levels.level7.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level7.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level7[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level7TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 4;
 		break;
 	case 8:
-		MapController.map = Levels.level8;
+		var _g = 0;
+		var _g1 = Levels.level8.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level8.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level8[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level8TimeLimit;
 		MapController.mapSize = 6;
 		MapController.mergeTotal = 3;
 		break;
 	case 9:
-		MapController.map = Levels.level9;
+		var _g = 0;
+		var _g1 = Levels.level9.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g3 = Levels.level9.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				MapController.map[j][i] = Levels.level9[j][i];
+			}
+		}
 		MapController.timeLimit = Levels.level9TimeLimit;
 		MapController.mapSize = 6;
 		MapController.mergeTotal = 3;
@@ -587,7 +679,7 @@ MapController.setLevel = function(level,resume) {
 	if(!invalidLevel) {
 		MapController.reset(resume);
 	} else {
-		haxe_Log.trace("INVALID LEVEL!",{ fileName : "MapController.hx", lineNumber : 305, className : "MapController", methodName : "setLevel"});
+		haxe_Log.trace("INVALID LEVEL!",{ fileName : "MapController.hx", lineNumber : 351, className : "MapController", methodName : "setLevel"});
 		MapController.reset(false);
 	}
 };
@@ -607,7 +699,7 @@ MapController.getValue = function(x,y) {
 	return MapController.map[y][x] & 255;
 };
 MapController.printMap = function() {
-	haxe_Log.trace(Std.string(MapController.map[0]) + ", " + Std.string(MapController.map[1]) + ", " + Std.string(MapController.map[2]) + ", " + Std.string(MapController.map[3]) + "\n" + Std.string(MapController.map[4]) + ", " + Std.string(MapController.map[5]) + ", " + Std.string(MapController.map[6]) + ", " + Std.string(MapController.map[7]) + "\n" + Std.string(MapController.map[8]) + ", " + Std.string(MapController.map[9]) + ", " + Std.string(MapController.map[10]) + ", " + Std.string(MapController.map[11]) + "\n",{ fileName : "MapController.hx", lineNumber : 323, className : "MapController", methodName : "printMap"});
+	haxe_Log.trace(Std.string(MapController.map[0]) + ", " + Std.string(MapController.map[1]) + ", " + Std.string(MapController.map[2]) + ", " + Std.string(MapController.map[3]) + "\n" + Std.string(MapController.map[4]) + ", " + Std.string(MapController.map[5]) + ", " + Std.string(MapController.map[6]) + ", " + Std.string(MapController.map[7]) + "\n" + Std.string(MapController.map[8]) + ", " + Std.string(MapController.map[9]) + ", " + Std.string(MapController.map[10]) + ", " + Std.string(MapController.map[11]) + "\n",{ fileName : "MapController.hx", lineNumber : 369, className : "MapController", methodName : "printMap"});
 };
 MapController.prototype = {
 	kb: null
@@ -769,8 +861,8 @@ var UIController = function() {
 		sponsorLogo3 = true;
 	});
 	var windowSize = rice2d_Window.getWindowSize();
-	UIController.title1 = new TitleUI("square",0,-400);
-	UIController.title2 = new TitleUI("ROOTS",0,-200);
+	UIController.title1 = new TitleUI("ROOT",0,-400);
+	UIController.title2 = new TitleUI("Rundown",0,-200);
 	UIController.button1 = new ButtonUI("Play",windowSize.width / 2 - 275. | 0,100 + (windowSize.height / 2 - 62.5 | 0),550,125,function() {
 		if(UIController.isInitialized()) {
 			UIController.hideMenu();
@@ -785,11 +877,15 @@ var UIController = function() {
 			LevelsController.showMenu();
 		}
 	});
+	rice2d_App.notifyOnUpdate(function() {
+		if(!sponsorLogo1 && !sponsorLogo2 && !sponsorLogo3) {
+			UIController.paused = true;
+		} else {
+			UIController.paused = false;
+		}
+	});
 	rice2d_App.notifyOnRenderG2(function(canvas) {
 		if(UIController.paused) {
-			return;
-		}
-		if(!sponsorLogo1 && !sponsorLogo2 && !sponsorLogo3) {
 			return;
 		}
 		var g = canvas.get_g2();
@@ -31647,7 +31743,7 @@ Levels.level9 = [[0,341,0,0,0,522],[0,0,0,0,0,0],[0,0,524,554,0,0],[0,522,0,0,77
 Levels.level9TimeLimit = 300.0;
 LevelsController.paused = true;
 MapController.mapSize = 4;
-MapController.map = [[]];
+MapController.map = [[270,0,0,0,0,0],[0,0,0,0,0,0],[520,521,0,0,0,0],[773,0,0,0,0,0],[773,0,0,0,0,0],[773,0,0,0,0,0]];
 MapController.blockSize = 150;
 MapController.paused = true;
 MapController.state = State.Playing;
