@@ -10,7 +10,7 @@ enum State {
 
 class MapController{
 
-    public static var mapDimension:Int = 4;
+    public static var mapSize:Int = 4;
 
     public static var map: Array<Array<Int>> = [[]];
     static var blockSize: Int = 150;
@@ -20,7 +20,8 @@ class MapController{
     var kb = rice2d.Input.getKeyboard();
 
     static var state: State = Playing;
-    static var level = 1;
+    static var level = 4;
+    static var mergeTotal = 2;
     static var time = 0.0;
     static var timeLimit = 0.0; // In seconds
 
@@ -34,8 +35,8 @@ class MapController{
             if(state == State.Won || state == State.Failed) return;
 
             if(kb.started(Up)){
-                for (y in 0...4) {
-                    for (x in 0...4){
+                for (y in 0...mapSize) {
+                    for (x in 0...mapSize){
                         if(y > 0){
                             if(getType(x, y) == 2){
                                 if(getType(x, y-1) == 0){
@@ -59,20 +60,20 @@ class MapController{
                 }
             }
             else if(kb.started(Down)){
-                for (y in new ReverseIterator(4, 0)) {
-                    for (x in 0...4){
-                        if(y < 3){
+                for (y in new ReverseIterator(mapSize, 0)) {
+                    for (x in 0...mapSize){
+                        if(y < mapSize-1){
                             if(getType(x, y) == 2){
                                 if(getType(x, y+1) == 0){
                                     map[y+1][x] = map[y][x];
                                     map[y][x] = 0;
                                 }
                             }
-                            else if(getType(x, y) == 3){
+                            else if(getType(x, y) == mapSize-1){
                                 if(getType(x, y+1) == 0){
                                     var newY = y;
                                     while(true){
-                                        if(newY < 3 && getType(x, newY+1) == 0){
+                                        if(newY < mapSize-1 && getType(x, newY+1) == 0){
                                             newY++;
                                         }else break;
                                     }
@@ -86,8 +87,8 @@ class MapController{
                 }
             }
             else if(kb.started(Left)){
-                for (x in 0...4){
-                    for (y in 0...4) {
+                for (x in 0...mapSize){
+                    for (y in 0...mapSize) {
                         if(x > 0){
                             if(getType(x, y) == 2){
                                 if(getType(x-1, y) == 0){
@@ -112,9 +113,9 @@ class MapController{
                 }
             }
             else if(kb.started(Right)){
-                for (x in new ReverseIterator(4, 0)){
-                    for (y in 0...4) {
-                        if(x < 3){
+                for (x in new ReverseIterator(mapSize, 0)){
+                    for (y in 0...mapSize) {
+                        if(x < mapSize-1){
                             if(getType(x, y) == 2){
                                 if(getType(x+1, y) == 0){
                                     map[y][x+1] = map[y][x];
@@ -125,7 +126,7 @@ class MapController{
                                 if(getType(x+1, y) == 0){
                                     var newX = x;
                                     while(true){
-                                        if(newX < 3 && getType(newX+1, y) == 0){
+                                        if(newX < mapSize-1 && getType(newX+1, y) == 0){
                                             newX++;
                                         }else break;
                                     }
@@ -142,9 +143,10 @@ class MapController{
                 var square_root = 0;
                 var x_pos = 0;
                 var y_pos = 0;
-                for(y in 0...3){
+                var mergeCount = 0;
+                for(y in 0...(mapSize-1)){
                     if(state == State.Won) break;
-                    for (x in 0...3) {
+                    for (x in 0...(mapSize-1)) {
                         var block1 = getValue(x, y);
                         var block2 = getValue(x+1, y);
                         var block3 = getValue(x, y+1);
@@ -152,33 +154,42 @@ class MapController{
                         if(block1 == 0 || block2 == 0 || block3 == 0 || block4 == 0) continue;
                         var sum = block1+block2+block3+block4;
                         if(sum > 0){
-                            var sr = Math.sqrt(sum);
+                            var sr = Math.floor(Math.sqrt(sum));
                             if(sr * sr == (sum*1.0)){
-                                state = State.Won;
-                            }else{
-                                state = State.Playing;
+                                // BEWARE OF FLOATING POINT!!!!!!!
+                                square_root = Math.ceil(sr);
+                                x_pos = x;
+                                y_pos = y;
+
+                                map[y_pos][x_pos] = square_root + 768;
+                                map[y_pos+1][x_pos] = 0;
+                                map[y_pos][x_pos+1] = 0;
+                                map[y_pos+1][x_pos+1] = 0;
+
+                                mergeCount++;
+                                if(mergeCount == mergeTotal){
+                                    state = State.Won;
+                                    break;
+                                }
+                                else state = State.Playing;
                             }
-                            // BEWARE OF FLOATING POINT!!!!!!!
-                            square_root = Math.ceil(sr);
-                            x_pos = x;
-                            y_pos = y;
                         }
                     }
                 }
-                if(state == State.Won){
-                    trace("Level completed!");
-                    map[y_pos][x_pos] = square_root + 768;
-                    map[y_pos+1][x_pos] = 0;
-                    map[y_pos][x_pos+1] = 0;
-                    map[y_pos+1][x_pos+1] = 0;
-                }
+                // if(state == State.Won){
+                //     trace("Level completed!");
+                //     map[y_pos][x_pos] = square_root + 768;
+                //     map[y_pos+1][x_pos] = 0;
+                //     map[y_pos][x_pos+1] = 0;
+                //     map[y_pos+1][x_pos+1] = 0;
+                // }
             }
         });
 
         App.notifyOnRenderG2((canvas)->{
             var windowDimension = rice2d.Window.getWindowSize();
-            var mapWidth = mapDimension*blockSize;
-            var mapHeight = mapDimension*blockSize;
+            var mapWidth = mapSize*blockSize;
+            var mapHeight = mapSize*blockSize;
             var mapWidth2 = mapWidth / 2;
             var mapHeight2 = mapHeight / 2;
             var mapPosX = (windowDimension.width/2) - mapWidth2;
@@ -192,8 +203,8 @@ class MapController{
             }else if(state == State.Failed){
                 g.clear(Color.Red);
             }else{
-                for (y in 0...4) {
-                    for (x in 0...4){
+                for (y in 0...mapSize) {
+                    for (x in 0...mapSize){
                         var type = getType(x, y);
                         if(type == 0) g.color = Color.White;
                         else if(type == 1) g.color = Color.Red;
@@ -222,10 +233,56 @@ class MapController{
             case 1:{
                 map = Levels.level1;
                 timeLimit = Levels.level1TimeLimit;
+                mapSize = 4;
+                mergeTotal = 1;
             }
             case 2:{
                 map = Levels.level2;
                 timeLimit = Levels.level2TimeLimit;
+                mapSize = 4;
+                mergeTotal = 1;
+            }
+            case 3:{
+                map = Levels.level3;
+                timeLimit = Levels.level3TimeLimit;
+                mapSize = 5;
+                mergeTotal = 1;
+            }
+            case 4:{
+                map = Levels.level4;
+                timeLimit = Levels.level4TimeLimit;
+                mapSize = 5;
+                mergeTotal = 2;
+            }
+            case 5:{
+                map = Levels.level5;
+                timeLimit = Levels.level5TimeLimit;
+                mapSize = 5;
+                mergeTotal = 2;
+            }
+            case 6:{
+                map = Levels.level6;
+                timeLimit = Levels.level6TimeLimit;
+                mapSize = 5;
+                mergeTotal = 1;
+            }
+            case 7:{
+                map = Levels.level7;
+                timeLimit = Levels.level7TimeLimit;
+                mapSize = 5;
+                mergeTotal = 4;
+            }
+            case 8:{
+                map = Levels.level8;
+                timeLimit = Levels.level8TimeLimit;
+                mapSize = 6;
+                mergeTotal = 3;
+            }
+            case 9:{
+                map = Levels.level9;
+                timeLimit = Levels.level9TimeLimit;
+                mapSize = 6;
+                mergeTotal = 2;
             }
             default: invalidLevel = true;
         }
