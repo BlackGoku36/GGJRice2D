@@ -25,8 +25,8 @@ class UIController{
 
         var windowSize = rice2d.Window.getWindowSize();
 
-        title1 = new TitleUI("square", 0, -400);
-        title2 = new TitleUI("ROOTS", 0, -200);
+        title1 = new TitleUI("ROOT", 0, -400);
+        title2 = new TitleUI("Rundown", 0, -200);
 
         button1 = new ButtonUI("Play", Std.int((windowSize.width/2)-(550/2)), 100+Std.int((windowSize.height/2)-(125/2)), 550, 125, ()->{
             if(isInitialized()){
