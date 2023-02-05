@@ -41,7 +41,6 @@ var GameOverScreen = function() {
 			LevelsController.showMenu();
 		}
 	});
-	GameOverScreen.hideMenu();
 };
 $hxClasses["GameOverScreen"] = GameOverScreen;
 GameOverScreen.__name__ = true;
@@ -293,7 +292,6 @@ var MapController = function() {
 	});
 	MapController.setLevel(MapController.level,false);
 	MapController.time = kha_Scheduler.realTime();
-	var mergeCount = 0;
 	rice2d_App.notifyOnUpdate(function() {
 		if(MapController.paused) {
 			MapController.buttonback.pauseHide();
@@ -312,6 +310,7 @@ var MapController = function() {
 			}
 			MapController.buttonback.pauseHide();
 			MapController.paused = true;
+			MapController.reset(false);
 			return;
 		}
 		if(_gthis.kb.started(38)) {
@@ -462,12 +461,10 @@ var MapController = function() {
 							MapController.map[y + 1][x] = 0;
 							MapController.map[y][x + 1] = 0;
 							MapController.map[y + 1][x + 1] = 0;
-							mergeCount += 1;
-							if(mergeCount == MapController.mergeTotal) {
+							MapController.mergeCount++;
+							if(MapController.mergeCount == MapController.mergeTotal) {
 								MapController.state = State.Won;
 								break;
-							} else {
-								MapController.state = State.Playing;
 							}
 						}
 					}
@@ -544,6 +541,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level1TimeLimit;
 		MapController.mapSize = 4;
 		MapController.mergeTotal = 1;
+		MapController.mergeCount = 0;
 		break;
 	case 2:
 		var _g = 0;
@@ -560,6 +558,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level2TimeLimit;
 		MapController.mapSize = 4;
 		MapController.mergeTotal = 1;
+		MapController.mergeCount = 0;
 		break;
 	case 3:
 		var _g = 0;
@@ -576,6 +575,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level3TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 1;
+		MapController.mergeCount = 0;
 		break;
 	case 4:
 		var _g = 0;
@@ -592,6 +592,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level4TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 2;
+		MapController.mergeCount = 0;
 		break;
 	case 5:
 		var _g = 0;
@@ -608,6 +609,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level5TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 2;
+		MapController.mergeCount = 0;
 		break;
 	case 6:
 		var _g = 0;
@@ -624,6 +626,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level6TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 1;
+		MapController.mergeCount = 0;
 		break;
 	case 7:
 		var _g = 0;
@@ -640,6 +643,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level7TimeLimit;
 		MapController.mapSize = 5;
 		MapController.mergeTotal = 4;
+		MapController.mergeCount = 0;
 		break;
 	case 8:
 		var _g = 0;
@@ -656,6 +660,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level8TimeLimit;
 		MapController.mapSize = 6;
 		MapController.mergeTotal = 3;
+		MapController.mergeCount = 0;
 		break;
 	case 9:
 		var _g = 0;
@@ -672,6 +677,7 @@ MapController.setLevel = function(level,resume) {
 		MapController.timeLimit = Levels.level9TimeLimit;
 		MapController.mapSize = 6;
 		MapController.mergeTotal = 3;
+		MapController.mergeCount = 0;
 		break;
 	default:
 		invalidLevel = true;
@@ -679,7 +685,7 @@ MapController.setLevel = function(level,resume) {
 	if(!invalidLevel) {
 		MapController.reset(resume);
 	} else {
-		haxe_Log.trace("INVALID LEVEL!",{ fileName : "MapController.hx", lineNumber : 351, className : "MapController", methodName : "setLevel"});
+		haxe_Log.trace("INVALID LEVEL!",{ fileName : "MapController.hx", lineNumber : 363, className : "MapController", methodName : "setLevel"});
 		MapController.reset(false);
 	}
 };
@@ -699,7 +705,7 @@ MapController.getValue = function(x,y) {
 	return MapController.map[y][x] & 255;
 };
 MapController.printMap = function() {
-	haxe_Log.trace(Std.string(MapController.map[0]) + ", " + Std.string(MapController.map[1]) + ", " + Std.string(MapController.map[2]) + ", " + Std.string(MapController.map[3]) + "\n" + Std.string(MapController.map[4]) + ", " + Std.string(MapController.map[5]) + ", " + Std.string(MapController.map[6]) + ", " + Std.string(MapController.map[7]) + "\n" + Std.string(MapController.map[8]) + ", " + Std.string(MapController.map[9]) + ", " + Std.string(MapController.map[10]) + ", " + Std.string(MapController.map[11]) + "\n",{ fileName : "MapController.hx", lineNumber : 369, className : "MapController", methodName : "printMap"});
+	haxe_Log.trace(Std.string(MapController.map[0]) + ", " + Std.string(MapController.map[1]) + ", " + Std.string(MapController.map[2]) + ", " + Std.string(MapController.map[3]) + "\n" + Std.string(MapController.map[4]) + ", " + Std.string(MapController.map[5]) + ", " + Std.string(MapController.map[6]) + ", " + Std.string(MapController.map[7]) + "\n" + Std.string(MapController.map[8]) + ", " + Std.string(MapController.map[9]) + ", " + Std.string(MapController.map[10]) + ", " + Std.string(MapController.map[11]) + "\n",{ fileName : "MapController.hx", lineNumber : 381, className : "MapController", methodName : "printMap"});
 };
 MapController.prototype = {
 	kb: null
@@ -886,6 +892,9 @@ var UIController = function() {
 	});
 	rice2d_App.notifyOnRenderG2(function(canvas) {
 		if(UIController.paused) {
+			return;
+		}
+		if(!sponsorLogo1 && !sponsorLogo2 && !sponsorLogo3) {
 			return;
 		}
 		var g = canvas.get_g2();
@@ -31751,7 +31760,8 @@ MapController.level = 4;
 MapController.mergeTotal = 2;
 MapController.time = 0.0;
 MapController.timeLimit = 0.0;
-UIController.paused = false;
+MapController.mergeCount = 0;
+UIController.paused = true;
 haxe_Unserializer.DEFAULT_RESOLVER = new haxe__$Unserializer_DefaultResolver();
 haxe_Unserializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
 haxe_crypto_Base64.CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

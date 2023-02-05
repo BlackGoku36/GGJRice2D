@@ -34,6 +34,8 @@ class MapController{
 
     static var buttonback: UIController.ButtonUI;
 
+    static var mergeCount = 0;
+
     public function new() {
         buttonback = new UIController.ButtonUI("<", 100, 100, 100, 100, ()->{
             reset(false);
@@ -43,9 +45,9 @@ class MapController{
 
         setLevel(level, false);
         time = haxe.Timer.stamp();
-        var mergeCount = 0;
 
         App.notifyOnUpdate(()-> {
+            // var mergeCount = 0;
             if(paused){
                 buttonback.pauseHide();
                 return;
@@ -61,6 +63,7 @@ class MapController{
                 }
                 buttonback.pauseHide();
                 paused = true;
+                reset(false);
                 return;
             }
 
@@ -200,7 +203,7 @@ class MapController{
                                     state = State.Won;
                                     break;
                                 }
-                                else state = State.Playing;
+                                // else state = State.Playing;
                             }
                         }
                     }
@@ -263,6 +266,7 @@ class MapController{
                 timeLimit = Levels.level1TimeLimit;
                 mapSize = 4;
                 mergeTotal = 1;
+                mergeCount = 0;
             }
             case 2:{
                 for(i in 0...Levels.level2.length){
@@ -273,6 +277,7 @@ class MapController{
                 timeLimit = Levels.level2TimeLimit;
                 mapSize = 4;
                 mergeTotal = 1;
+                mergeCount = 0;
             }
             case 3:{
                 for(i in 0...Levels.level3.length){
@@ -283,6 +288,7 @@ class MapController{
                 timeLimit = Levels.level3TimeLimit;
                 mapSize = 5;
                 mergeTotal = 1;
+                mergeCount = 0;
             }
             case 4:{
                 for(i in 0...Levels.level4.length){
@@ -293,6 +299,7 @@ class MapController{
                 timeLimit = Levels.level4TimeLimit;
                 mapSize = 5;
                 mergeTotal = 2;
+                mergeCount = 0;
             }
             case 5:{
                 for(i in 0...Levels.level5.length){
@@ -303,6 +310,7 @@ class MapController{
                 timeLimit = Levels.level5TimeLimit;
                 mapSize = 5;
                 mergeTotal = 2;
+                mergeCount = 0;
             }
             case 6:{
                 for(i in 0...Levels.level6.length){
@@ -313,6 +321,7 @@ class MapController{
                 timeLimit = Levels.level6TimeLimit;
                 mapSize = 5;
                 mergeTotal = 1;
+                mergeCount = 0;
             }
             case 7:{
                 for(i in 0...Levels.level7.length){
@@ -323,6 +332,7 @@ class MapController{
                 timeLimit = Levels.level7TimeLimit;
                 mapSize = 5;
                 mergeTotal = 4;
+                mergeCount = 0;
             }
             case 8:{
                 for(i in 0...Levels.level8.length){
@@ -333,6 +343,7 @@ class MapController{
                 timeLimit = Levels.level8TimeLimit;
                 mapSize = 6;
                 mergeTotal = 3;
+                mergeCount = 0;
             }
             case 9:{
                 for(i in 0...Levels.level9.length){
@@ -343,6 +354,7 @@ class MapController{
                 timeLimit = Levels.level9TimeLimit;
                 mapSize = 6;
                 mergeTotal = 3;
+                mergeCount = 0;
             }
             default: invalidLevel = true;
         }

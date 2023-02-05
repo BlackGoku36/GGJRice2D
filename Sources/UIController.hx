@@ -10,7 +10,7 @@ class UIController{
     static var title2: TitleUI;
     static var button1: ButtonUI;
     static var button2: ButtonUI;
-    public static var paused = false;
+    public static var paused = true;
 
 
     public function new() {
@@ -51,6 +51,7 @@ class UIController{
 
         App.notifyOnRenderG2((canvas)->{
             if(paused) return;
+            if(!sponsorLogo1 && !sponsorLogo2 && !sponsorLogo3) return;
 
             var g = canvas.g2;
             var col = g.color;

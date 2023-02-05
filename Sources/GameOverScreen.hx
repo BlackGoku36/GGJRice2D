@@ -26,7 +26,7 @@ class GameOverScreen{
             }
         });
 
-        hideMenu();
+        // hideMenu();
     }
 
     static function isInitialized(): Bool{
