@@ -74,7 +74,6 @@ class UIController{
         title2.pauseHide();
         button1.pauseHide();
         button2.pauseHide();
-        button3.pauseHide();
     }
 
     public static function showMenu(){
@@ -83,7 +82,6 @@ class UIController{
         title2.resumeShow();
         button1.resumeShow();
         button2.resumeShow();
-        button3.resumeShow();
     }
 
 }
