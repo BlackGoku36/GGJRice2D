@@ -17,9 +17,9 @@ class GameOverScreen{
 
         var windowSize = rice2d.Window.getWindowSize();
 
-        title1 = new TitleUI("", 0, -500);
+        title1 = new TitleUI("", -300, -500);
 
-        buttonback = new ButtonUI("Back", Std.int((windowSize.width/2)-(550/2)), Std.int((windowSize.height/2)-(125/2))-400, 550, 125, ()->{
+        buttonback = new ButtonUI("Back", Std.int((windowSize.width/2)-(550/2)), Std.int((windowSize.height/2)-(125/2))-200, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
                 LevelsController.showMenu();

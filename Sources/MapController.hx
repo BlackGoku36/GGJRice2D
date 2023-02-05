@@ -244,7 +244,8 @@ class MapController{
         var invalidLevel = false;
         switch (level) {
             case 1:{
-                map = Levels.level1;
+                map.resize(0);
+                map = Levels.level1.copy();
                 timeLimit = Levels.level1TimeLimit;
                 mapSize = 4;
                 mergeTotal = 1;

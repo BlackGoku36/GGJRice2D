@@ -38,6 +38,7 @@ class LevelsController{
         button1 = new ButtonUI("Level 1", Std.int((windowSize.width/2)-(550/2))-600, 100+Std.int((windowSize.height/2)-(125/2))-300, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(1, true);
             }
         });
@@ -45,6 +46,7 @@ class LevelsController{
         button2 = new ButtonUI("Level 2", Std.int((windowSize.width/2)-(550/2))+600, 100+Std.int((windowSize.height/2)-(125/2))-300, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(2, true);
             }
         });
@@ -52,6 +54,7 @@ class LevelsController{
         button3 = new ButtonUI("Level 3", Std.int((windowSize.width/2)-(550/2))-600, Std.int((windowSize.height/2)-(125/2)), 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(3, true);
             }
         });
@@ -59,6 +62,7 @@ class LevelsController{
         button4 = new ButtonUI("Level 4", Std.int((windowSize.width/2)-(550/2))+600, Std.int((windowSize.height/2)-(125/2)), 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(4, true);
             }
         });
@@ -66,6 +70,7 @@ class LevelsController{
         button5 = new ButtonUI("Level 5", Std.int((windowSize.width/2)-(550/2))-600, Std.int((windowSize.height/2)-(125/2))+200, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(5, true);
             }
         });
@@ -73,6 +78,7 @@ class LevelsController{
         button6 = new ButtonUI("Level 6", Std.int((windowSize.width/2)-(550/2))+600, Std.int((windowSize.height/2)-(125/2))+200, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(6, true);
             }
         });
@@ -80,6 +86,7 @@ class LevelsController{
         button7 = new ButtonUI("Level 7", Std.int((windowSize.width/2)-(550/2))-600, Std.int((windowSize.height/2)-(125/2))+400, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(7, true);
             }
         });
@@ -87,6 +94,7 @@ class LevelsController{
         button8 = new ButtonUI("Level 8", Std.int((windowSize.width/2)-(550/2))+600, Std.int((windowSize.height/2)-(125/2))+400, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(8, true);
             }
         });
@@ -94,6 +102,7 @@ class LevelsController{
         button9 = new ButtonUI("Level 9", Std.int((windowSize.width/2)-(550/2)), Std.int((windowSize.height/2)-(125/2))+600, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(9, true);
             }
         });

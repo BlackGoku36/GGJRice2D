@@ -12,6 +12,8 @@ class Main {
             MapController.paused = true;
             new LevelsController();
             LevelsController.hideMenu();
+            new GameOverScreen();
+            GameOverScreen.hideMenu();
         });// 1
         // new MapController();
         // MapController.setLevel(1, true);

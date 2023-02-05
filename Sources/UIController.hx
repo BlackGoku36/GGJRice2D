@@ -10,7 +10,6 @@ class UIController{
     static var title2: TitleUI;
     static var button1: ButtonUI;
     static var button2: ButtonUI;
-    static var button3: ButtonUI;
     public static var paused = false;
 
 
@@ -32,6 +31,7 @@ class UIController{
         button1 = new ButtonUI("Play", Std.int((windowSize.width/2)-(550/2)), 100+Std.int((windowSize.height/2)-(125/2)), 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.reset(false);
                 MapController.setLevel(1, true);
             }
         });
@@ -42,10 +42,6 @@ class UIController{
                 MapController.paused = true;
                 LevelsController.showMenu();
             }
-        });
-
-        button3 = new ButtonUI("Credits", Std.int((windowSize.width/2)-(550/2)), 500+Std.int((windowSize.height/2)-(125/2)), 550, 125, ()->{
-            trace("hi");
         });
 
         App.notifyOnRenderG2((canvas)->{
@@ -67,7 +63,7 @@ class UIController{
     }
 
     static function isInitialized(): Bool{
-        if(title1 != null && title2 != null && button1 != null && button2 != null && button3 != null)
+        if(title1 != null && title2 != null && button1 != null && button2 != null)
             return true;
         return false;
     }
