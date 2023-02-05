@@ -2,26 +2,15 @@
 import rice2d.App;
 import kha.Color;
 
-typedef Block = { 
-    var t : Int;
-    var v : Int;
-}
-
 class MapController{
 
     public static var mapDimension:Int = 4;
 
-    // public static var map: Array<Block> = [
-    //     {t:1,v:14}, {t:0,v:0}, {t:0,v:0}, {t:0,v:0}, 
-    //     {t:0,v:0}, {t:0,v:0}, {t:0,v:0}, {t:0,v:0}, 
-    //     {t:2,v:6}, {t:2,v:9}, {t:0,v:0}, {t:0,v:0}, 
-    //     {t:3,v:5}, {t:0,v:0}, {t:0,v:0}, {t:0,v:0},
-    // ];
     public static var map: Array<Array<Int>> = [
-        [48, 0, 0, 0], 
+        [30, 0, 0, 0], 
         [0, 0, 0, 0], 
-        [32, 16, 0, 0], 
-        [48, 0, 0, 48],
+        [38, 41, 0, 0], 
+        [53, 0, 0, 0],
     ];
     static var blockSize: Int = 100;
 
@@ -147,7 +136,8 @@ class MapController{
             var mapPosY = (windowDimension.height/2) - mapHeight2;
             var g = canvas.g2;
             var col = g.color;
-            g.color = Color.Red;
+            g.font = rice2d.App.font;
+            g.fontSize = 35;
             for (y in 0...4) {
                 for (x in 0...4){
                     var type = getType(x, y);
@@ -156,6 +146,8 @@ class MapController{
                     else if(type == 2) g.color = Color.Green;
                     else if(type == 3) g.color = Color.Blue;
                     g.fillRect(x*blockSize+mapPosX, y*blockSize+mapPosY, blockSize, blockSize);
+                    g.color = Color.Black;
+                    g.drawString(getValue(x, y) + "", x*blockSize+mapPosX, y*blockSize+mapPosY);
                 }
             }
             g.color = col;
@@ -169,6 +161,10 @@ class MapController{
         else if(type == 32) return 2;
         else if(type == 48) return 3;
         else return 0;
+    }
+
+    public static function getValue(x:Int, y:Int): Int {
+        return map[y][x] & 15;
     }
 
     public static function printMap(){

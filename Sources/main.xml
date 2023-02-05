@@ -17,7 +17,7 @@
     
     #styled {
         font-size: 24px;
-        background-color:#AAFFAA;
+        background-image: "logologo.png";
         color: green;
         border-color: green;
         border-size: 2px;
@@ -39,16 +39,15 @@
     }
     
     .bitmapButton {
-        background-image: "assets/button.png";
-        background-image-clip: 0px 0px 40px 94px;
-        background-image-slice: 10px 10px 30px 84px;
+        background-image: "Assets/logologo.png";
+        <!-- background-image-clip: 0px 0px 100px 100px; -->
+        <!-- background-image-slice: 0px 0px 100px 100px; -->
         border: none;
-        background-color: white;
-        color: #666666;
-        padding-top: 10px;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-bottom: 10px;
+        <!-- background-color: #FFFFFF; -->
+        padding-top: 200px;
+        padding-left: 200px;
+        padding-right: 200px;
+        padding-bottom: 200px;
     }
 
     .bitmapButton .label {
@@ -56,20 +55,19 @@
     }
 
     .bitmapButton:hover {
-        background-image: "assets/button.png";
-        background-image-clip: 0px 95px 40px 189px;
-        background-image-slice: 10px 10px 30px 84px;
+        background-image: "Assets/logologo.png";
+        background-image-clip: border-box;
+        <!-- background-image-slice: 10px 10px 30px 84px; -->
         border: none;
-        background-color: white;
-        color: #FFFFFF;
+        background-color: #FFFFFF;
     }
 
     .bitmapButton:down {
-        background-image: "assets/button.png";
-        background-image-clip: 0px 190px 40px 284px;
-        background-image-slice: 10px 10px 30px 84px;
+        background-image: "Assets/logologo.png";
+        <!-- background-image-clip: 0px 190px 40px 284px; -->
+        <!-- background-image-slice: 10px 10px 30px 84px; -->
         border: none;
-        background-color: white;
+        background-color: #FFFFFF;
         color: #FCFCFC;
     }
 

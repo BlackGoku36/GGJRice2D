@@ -7,7 +7,7 @@ class Main {
     public static function main() {
         App.init("Empty Rice2D", 1280, 720, kha.Color.Black, kha.WindowMode.Fullscreen, ()->{
         });// 1
-        // new MapController();
-        new UIController();
+        new MapController();
+        // new UIController();
     }
 }
