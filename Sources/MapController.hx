@@ -2,25 +2,37 @@
 import rice2d.App;
 import kha.Color;
 
+enum State {
+  Won;
+  Failed;
+  Playing;
+}
+
 class MapController{
 
     public static var mapDimension:Int = 4;
 
-    public static var map: Array<Array<Int>> = [
-        [270, 0, 0, 0], 
-        [0, 0, 0, 0], 
-        [518, 521, 0, 0], 
-        [773, 0, 0, 0],
-    ];
-    static var blockSize: Int = 100;
+    public static var map: Array<Array<Int>> = [[]];
+    static var blockSize: Int = 150;
+
+    public static var paused = false;
 
     var kb = rice2d.Input.getKeyboard();
 
-    var is_ps = false;
+    static var state: State = Playing;
+    static var level = 1;
+    static var time = 0.0;
+    static var timeLimit = 0.0; // In seconds
 
     public function new() {
+        setLevel(level, true);
+        time = haxe.Timer.stamp();
 
         App.notifyOnUpdate(()-> {
+            if(paused) return;
+            if((haxe.Timer.stamp()-time) > timeLimit) state = State.Failed;
+            if(state == State.Won || state == State.Failed) return;
+
             if(kb.started(Up)){
                 for (y in 0...4) {
                     for (x in 0...4){
@@ -126,12 +138,12 @@ class MapController{
                 }
             }
 
-            if(is_ps == false){
+            if(state == State.Playing){
                 var square_root = 0;
                 var x_pos = 0;
                 var y_pos = 0;
                 for(y in 0...3){
-                    if(is_ps) break;
+                    if(state == State.Won) break;
                     for (x in 0...3) {
                         var block1 = getValue(x, y);
                         var block2 = getValue(x+1, y);
@@ -141,7 +153,11 @@ class MapController{
                         var sum = block1+block2+block3+block4;
                         if(sum > 0){
                             var sr = Math.sqrt(sum);
-                            is_ps = (sr * sr == (sum*1.0));
+                            if(sr * sr == (sum*1.0)){
+                                state = State.Won;
+                            }else{
+                                state = State.Playing;
+                            }
                             // BEWARE OF FLOATING POINT!!!!!!!
                             square_root = Math.ceil(sr);
                             x_pos = x;
@@ -149,7 +165,7 @@ class MapController{
                         }
                     }
                 }
-                if(is_ps){
+                if(state == State.Won){
                     trace("Level completed!");
                     map[y_pos][x_pos] = square_root + 768;
                     map[y_pos+1][x_pos] = 0;
@@ -171,21 +187,53 @@ class MapController{
             var col = g.color;
             g.font = rice2d.App.font;
             g.fontSize = 35;
-            for (y in 0...4) {
-                for (x in 0...4){
-                    var type = getType(x, y);
-                    if(type == 0) g.color = Color.White;
-                    else if(type == 1) g.color = Color.Red;
-                    else if(type == 2) g.color = Color.Green;
-                    else if(type == 3) g.color = Color.Blue;
-                    g.fillRect(x*blockSize+mapPosX, y*blockSize+mapPosY, blockSize, blockSize);
-                    g.color = Color.Black;
-                    g.drawString(getValue(x, y) + "", x*blockSize+mapPosX, y*blockSize+mapPosY);
+            if(state == State.Won){
+                g.clear(Color.Green);
+            }else if(state == State.Failed){
+                g.clear(Color.Red);
+            }else{
+                for (y in 0...4) {
+                    for (x in 0...4){
+                        var type = getType(x, y);
+                        if(type == 0) g.color = Color.White;
+                        else if(type == 1) g.color = Color.Red;
+                        else if(type == 2) g.color = Color.Green;
+                        else if(type == 3) g.color = Color.Blue;
+                        g.fillRect(x*blockSize+mapPosX, y*blockSize+mapPosY, blockSize, blockSize);
+                        g.color = Color.Black;
+                        g.drawString(getValue(x, y) + "", x*blockSize+mapPosX, y*blockSize+mapPosY);
+                    }
                 }
             }
             g.color = col;
         });
 
+    }
+
+    public static function reset(resume: Bool){
+        state = Playing;
+        time = haxe.Timer.stamp();
+        paused = !resume;
+    }
+
+    public static function setLevel(level: Int, resume: Bool){
+        var invalidLevel = false;
+        switch (level) {
+            case 1:{
+                map = Levels.level1;
+                timeLimit = Levels.level1TimeLimit;
+            }
+            case 2:{
+                map = Levels.level2;
+                timeLimit = Levels.level2TimeLimit;
+            }
+            default: invalidLevel = true;
+        }
+        if(!invalidLevel) reset(resume);
+        else{
+            trace("INVALID LEVEL!");
+            reset(false);
+        }
     }
 
     public static function getType(x: Int, y: Int): Int {

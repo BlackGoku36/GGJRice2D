@@ -8,6 +8,7 @@ class Main {
         App.init("Empty Rice2D", 1280, 720, kha.Color.Black, kha.WindowMode.Fullscreen, ()->{
         });// 1
         new MapController();
+        // MapController.setLevel(1, true);
         // new UIController();
     }
 }
