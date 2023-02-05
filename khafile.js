@@ -5,5 +5,6 @@ project.addSources('Sources');
 project.addLibrary('haxeui-core');
 project.addLibrary('haxeui-kha');
 project.addLibrary('hscript');
+project.addDefine('kha_html5_disable_automatic_size_adjust');
 await project.addProject('Rice2D');
 resolve(project);

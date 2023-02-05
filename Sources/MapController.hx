@@ -7,14 +7,16 @@ class MapController{
     public static var mapDimension:Int = 4;
 
     public static var map: Array<Array<Int>> = [
-        [30, 0, 0, 0], 
+        [270, 0, 0, 0], 
         [0, 0, 0, 0], 
-        [38, 41, 0, 0], 
-        [53, 0, 0, 0],
+        [518, 521, 0, 0], 
+        [773, 0, 0, 0],
     ];
     static var blockSize: Int = 100;
 
     var kb = rice2d.Input.getKeyboard();
+
+    var is_ps = false;
 
     public function new() {
 
@@ -22,7 +24,6 @@ class MapController{
             if(kb.started(Up)){
                 for (y in 0...4) {
                     for (x in 0...4){
-                        printMap();
                         if(y > 0){
                             if(getType(x, y) == 2){
                                 if(getType(x, y-1) == 0){
@@ -124,6 +125,38 @@ class MapController{
                     }
                 }
             }
+
+            if(is_ps == false){
+                var square_root = 0;
+                var x_pos = 0;
+                var y_pos = 0;
+                for(y in 0...3){
+                    if(is_ps) break;
+                    for (x in 0...3) {
+                        var block1 = getValue(x, y);
+                        var block2 = getValue(x+1, y);
+                        var block3 = getValue(x, y+1);
+                        var block4 = getValue(x+1, y+1);
+                        if(block1 == 0 || block2 == 0 || block3 == 0 || block4 == 0) continue;
+                        var sum = block1+block2+block3+block4;
+                        if(sum > 0){
+                            var sr = Math.sqrt(sum);
+                            is_ps = (sr * sr == (sum*1.0));
+                            // BEWARE OF FLOATING POINT!!!!!!!
+                            square_root = Math.ceil(sr);
+                            x_pos = x;
+                            y_pos = y;
+                        }
+                    }
+                }
+                if(is_ps){
+                    trace("Level completed!");
+                    map[y_pos][x_pos] = square_root + 768;
+                    map[y_pos+1][x_pos] = 0;
+                    map[y_pos][x_pos+1] = 0;
+                    map[y_pos+1][x_pos+1] = 0;
+                }
+            }
         });
 
         App.notifyOnRenderG2((canvas)->{
@@ -156,15 +189,15 @@ class MapController{
     }
 
     public static function getType(x: Int, y: Int): Int {
-        var type = map[y][x] & (3 << 4);
-        if(type == 16) return 1;
-        else if(type == 32) return 2;
-        else if(type == 48) return 3;
+        var type = map[y][x] & (3 << 8);
+        if(type == 256) return 1;
+        else if(type == 512) return 2;
+        else if(type == 768) return 3;
         else return 0;
     }
 
     public static function getValue(x:Int, y:Int): Int {
-        return map[y][x] & 15;
+        return map[y][x] & 255;
     }
 
     public static function printMap(){
