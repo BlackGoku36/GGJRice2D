@@ -44,9 +44,13 @@ class UIController{
             }
         });
 
+         App.notifyOnUpdate(()-> {
+            if(!sponsorLogo1 && !sponsorLogo2 && !sponsorLogo3) paused = true;
+            else paused = false;
+         });
+
         App.notifyOnRenderG2((canvas)->{
             if(paused) return;
-            if(!sponsorLogo1 && !sponsorLogo2 && !sponsorLogo3) return;
 
             var g = canvas.g2;
             var col = g.color;

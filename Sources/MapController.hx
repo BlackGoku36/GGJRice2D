@@ -21,9 +21,9 @@ class MapController{
 
     static var state: State = Playing;
     static var level = 4;
-    static var mergeTotal = 2;
+    public static var mergeTotal = 2;
     static var time = 0.0;
-    static var timeLimit = 0.0; // In seconds
+    public static var timeLimit = 0.0; // In seconds
 
     static var buttonback: UIController.ButtonUI;
 
@@ -240,12 +240,19 @@ class MapController{
         paused = !resume;
     }
 
+    public static function copy(arr: Array<Array<Int>>){
+        return arr.copy();
+    }
+
     public static function setLevel(level: Int, resume: Bool){
         var invalidLevel = false;
         switch (level) {
             case 1:{
-                map.resize(0);
-                map = Levels.level1.copy();
+                for(i in 0...Levels.level1.length){
+                    for(j in 0...Levels.level1.length){
+                        map[j][i] = Levels.level1[j][i];
+                    }
+                }
                 timeLimit = Levels.level1TimeLimit;
                 mapSize = 4;
                 mergeTotal = 1;

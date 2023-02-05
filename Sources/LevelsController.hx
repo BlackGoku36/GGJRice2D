@@ -38,6 +38,10 @@ class LevelsController{
         button1 = new ButtonUI("Level 1", Std.int((windowSize.width/2)-(550/2))-600, 100+Std.int((windowSize.height/2)-(125/2))-300, 550, 125, ()->{
             if(isInitialized()){
                 hideMenu();
+                MapController.map = Levels.level1;
+                MapController.timeLimit = Levels.level1TimeLimit;
+                MapController.mapSize = 4;
+                MapController.mergeTotal = 1;
                 MapController.reset(false);
                 MapController.setLevel(1, true);
             }
