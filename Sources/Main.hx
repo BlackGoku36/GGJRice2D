@@ -15,8 +15,5 @@ class Main {
             new GameOverScreen();
             GameOverScreen.hideMenu();
         });// 1
-        // new MapController();
-        // MapController.setLevel(1, true);
-        // new UIController();
     }
 }
